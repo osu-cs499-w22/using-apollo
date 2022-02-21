@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import fetch from 'isomorphic-unfetch';
 
 export default function useUserReposWithIssues(login, token) {
   const [ user, setUser ] = useState({});
