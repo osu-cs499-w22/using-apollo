@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMutation, gql } from '@apollo/client';
 
 /*
  * Caution!!!  This is not a safe way to incorporate an authentication token
@@ -8,15 +9,37 @@ import React, { useState } from 'react';
 const token = process.env.REACT_APP_NOT_SECRET_GITHUB_TOKEN;
 const login = 'robwhess';
 
+const MUTATION = gql`
+  mutation changeUserStatus($emoji: String!, $message: String!) {
+  changeUserStatus(input: {
+    emoji: $emoji
+    message: $message
+    clientMutationId: "cs499Client"
+  }) {
+    status {
+      updatedAt
+      message
+    }
+  }
+}
+`;
+
 export default function ChangeUserStatus() {
   const [ emoji, setEmoji ] = useState("");
   const [ message, setMessage ] = useState("");
+  const [ changeUserStatus, { data } ] = useMutation(MUTATION);
+
+  console.log("== data:", data)
 
   return (
     <div>
       {token ? (
         <form onSubmit={(e) => {
           e.preventDefault();
+          changeUserStatus({ variables: {
+            emoji: emoji,
+            message: message
+          }});
           setEmoji("");
           setMessage("");
         }}>
