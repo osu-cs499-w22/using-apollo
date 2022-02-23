@@ -29,8 +29,6 @@ export default function ChangeUserStatus() {
   const [ message, setMessage ] = useState("");
   const [ changeUserStatus, { data } ] = useMutation(MUTATION);
 
-  console.log("== data:", data)
-
   return (
     <div>
       {token ? (
@@ -61,6 +59,7 @@ export default function ChangeUserStatus() {
           </div>
           <div>
             <button>Submit</button>
+            <p>Last updated at: {data?.changeUserStatus?.status.updatedAt}</p>
           </div>
         </form>
       ) : (

@@ -7,7 +7,7 @@ export default function ReposList({ repos }) {
         <div key={repo.id}>
           <a href={repo.url}><h2>{repo.name}</h2></a>
           <ul>
-            {repo.issues && repo.issues.nodes ? (
+            {repo?.issues?.nodes && (
               repo.issues.nodes.map(issue => (
                 <li key={issue.id}>
                   <a href={issue.url}>{issue.title}</a> &ndash; {issue.createdAt}

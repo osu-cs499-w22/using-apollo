@@ -23,6 +23,7 @@ query userDashboardQuery($login: String!) {
       direction: DESC
     }) {
       nodes {
+        id
         name
         url
         issues(first: 3, states: OPEN, orderBy: {
@@ -30,6 +31,7 @@ query userDashboardQuery($login: String!) {
           direction: DESC
         }) {
           nodes {
+            id
             title
             url
             createdAt
@@ -43,14 +45,17 @@ query userDashboardQuery($login: String!) {
 
 export default function UserIssuesDashboard() {
   const { data, loading, error } = useQuery(QUERY, {
-    variables: { login: "robwhess" }
+    variables: { login: login }
   });
-  console.log("== data:", data);
+  console.log("== data:", data)
   return (
     <div>
       {token ? (
         <>
-          <p>Let's work on loading some data...</p>
+          {loading && <p>Loading...</p>}
+          {error && <p>{error.message}</p>}
+          {data?.user && <UserHeader login={login} user={data.user} />}
+          {data?.user?.repositories?.nodes && <ReposList repos={data?.user?.repositories?.nodes} />}
         </>
       ) : (
         <p>

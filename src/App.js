@@ -7,7 +7,7 @@ import ChangeUserStatus from './pages/ChangeUserStatusWithGraphQL';
 function App() {
   return (
     <div>
-      <ChangeUserStatus />
+      <UserIssuesDashboard />
     </div>
   );
 }
